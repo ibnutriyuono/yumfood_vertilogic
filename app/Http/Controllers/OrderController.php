@@ -62,9 +62,17 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
         //
+        try {
+            return new OrderResource(Order::findOrFail($id)); 
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                "statusCode" => 404,
+                "message" => "Sorry. Data not found"
+            ], 404);
+        }
     }
 
     /**
