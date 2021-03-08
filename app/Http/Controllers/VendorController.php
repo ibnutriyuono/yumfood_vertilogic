@@ -7,6 +7,9 @@ use App\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Validator;
+use App\Tag;
+use App\Http\Requests\VendorRequest;
 
 class VendorController extends Controller
 {
@@ -26,9 +29,29 @@ class VendorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(VendorRequest $request)
     {
         //
+        $validated = $request->validated();
+        $vendor = new Vendor;
+        $vendor->name=$request['name'];
+        $vendor->logo=$request['logo'];
+        $sucessAddData = $vendor->save();
+        if ($sucessAddData) {
+            $tags = $request['tags'];
+            if (!empty($tags)) {
+                $tagList = explode(",", $tags);
+                foreach ($tagList as $tags) {
+                    $tag = Tag::firstOrCreate(['name' => $tags]);
+                }
+                $tags = Tag::whereIn('name', $tagList)->get()->pluck('id');
+                $vendor->tags()->sync($tags);
+            }
+            return response()->json([
+                "statusCode" => 200,
+                "message" => "Success. $vendor[name] successfully added."
+            ]);
+        }
     }
 
     /**
