@@ -7,6 +7,7 @@ use App\Dish;
 use App\Vendor;
 use Illuminate\Http\Request;
 use App\Http\Requests\DishRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DishController extends Controller
 {
