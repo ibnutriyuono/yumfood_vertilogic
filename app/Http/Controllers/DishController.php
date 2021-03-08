@@ -22,17 +22,6 @@ class DishController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(VendorRequest $request)
-    {
-        //
-        $validated = $request->validated();
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -105,5 +94,18 @@ class DishController extends Controller
     public function destroy($id)
     {
         //
+        $dish = Dish::find($id);
+        if ($dish) {
+            Dish::destroy($id);
+            return response()->json([
+                "statusCode" => 200,
+                "messsage" => "Success. $dish[name] successfully deleted."
+            ]);
+        } else {
+            return response()->json([
+                "statusCode" => 404,
+                "message" => "Sorry. Data not found"
+            ], 404);
+        }
     }
 }
