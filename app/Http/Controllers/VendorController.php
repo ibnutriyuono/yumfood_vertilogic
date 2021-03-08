@@ -26,7 +26,7 @@ class VendorController extends Controller
             $tags = $request['tags'];
             return VendorResource::collection(Vendor::wherehas('tags', function ($q) use ($tags) {
                 $q->whereIn('name', $tags);
-            })->get());
+            })->orderBy('id', 'asc')->paginate());
         }
     }
 
