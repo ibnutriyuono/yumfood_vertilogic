@@ -82,9 +82,32 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(OrderRequest $request, $id)
     {
         //
+        try {
+            $price = Dish::findOrFail($request['dish_id'])['price'];
+            $amount = $price * $request['quantity'];
+            $validated = $request->validated();
+            $order = Order::find($id);
+            $order->vendor_id = $request['vendor_id'];
+            $order->dish_id = $request['dish_id'];
+            $order->user_id = $request['user_id'];
+            $order->quantity = $request['quantity'];
+            $order->amount = $price * $request['quantity'];
+            $successEditData = $order->save();
+            if ($successEditData) {
+                return response()->json([
+                    "statusCode" => 200,
+                    "message" => "Success. Order number $order[id] successfully changed."
+                ]);
+            }
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                "statusCode" => 404,
+                "message" => "Sorry. Data not found"
+            ], 404);
+        }
     }
 
     /**
@@ -93,8 +116,21 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($id)
     {
         //
+        $vendor = Order::find($id);
+        if ($vendor) {
+            Order::destroy($id);
+            return response()->json([
+                "statusCode" => 200,
+                "messsage" => "Success. $vendor[name] successfully deleted."
+            ]);
+        } else {
+            return response()->json([
+                "statusCode" => 404,
+                "message" => "Sorry. Data not found"
+            ], 404);
+        }
     }
 }
