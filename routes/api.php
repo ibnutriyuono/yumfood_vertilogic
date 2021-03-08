@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 Route::prefix('v1')->group(function () {
     Route::apiResource('vendors', 'VendorController');
-    Route::get('/get-dishes/{id}', 'VendorController@getDishByVendor');
+    Route::get('/vendors/{id}/dishes/', 'VendorController@getDishByVendor');
 });
 
 Route::prefix('v1')->group(function () {
