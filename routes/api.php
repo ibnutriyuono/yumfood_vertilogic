@@ -17,6 +17,10 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('vendors', 'VendorController');
 });
 
+Route::prefix('v1')->group(function () {
+    Route::apiResource('dishes', 'DishController');
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
