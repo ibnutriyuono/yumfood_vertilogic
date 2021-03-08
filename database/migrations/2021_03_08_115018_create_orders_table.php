@@ -16,9 +16,14 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('vendor_id');
+            $table->bigInteger('dish_id');
             $table->bigInteger('user_id');
             $table->integer('quantity');
+            $table->integer('amount');
             $table->timestamps();
+            $table->foreign('dish_id')->references('id')->on('dishes');
+            $table->foreign('vendor_id')->references('id')->on('vendors');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
