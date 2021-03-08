@@ -6,6 +6,7 @@ use App\Http\Resources\DishResource;
 use App\Dish;   
 use App\Vendor;
 use Illuminate\Http\Request;
+use App\Http\Requests\DishRequest;
 
 class DishController extends Controller
 {
@@ -25,9 +26,10 @@ class DishController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(VendorRequest $request)
     {
         //
+        $validated = $request->validated();
     }
 
     /**
@@ -36,9 +38,20 @@ class DishController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DishRequest $request)
     {
         //
+        $validated = $request->validated();
+        $dish = new Dish;
+        $dish->name=$request['name'];
+        $dish->vendor_id=$request['vendor_id'];
+        $sucessAddData = $dish->save();
+        if ($sucessAddData) {
+            return response()->json([
+                "statusCode" => 200,
+                "message" => "Success. $dish[name] successfully added."
+            ]);
+        }
     }
 
     /**
@@ -50,6 +63,14 @@ class DishController extends Controller
     public function show($id)
     {
         //
+        try {
+            return new DishResource(Dish::findOrFail($id)); 
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                "statusCode" => 404,
+                "message" => "Sorry. Data not found"
+            ], 404);
+        }
     }
 
     /**
