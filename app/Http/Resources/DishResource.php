@@ -17,6 +17,7 @@ class DishResource extends JsonResource
         return [
             'id'   => $this->id,
             'name' => $this->name,
+            'price' => $this->price,
             'vendor' => $this->vendor,
         ];
     }

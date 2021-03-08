@@ -25,7 +25,8 @@ class DishRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'vendor_id' => 'required'
+            'vendor_id' => 'required',
+            'price' => 'required|integer|min:0',
         ];
     }
 

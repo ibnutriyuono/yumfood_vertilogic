@@ -34,6 +34,7 @@ class DishController extends Controller
         $dish = new Dish;
         $dish->name=$request['name'];
         $dish->vendor_id=$request['vendor_id'];
+        $dish->price=$request['price'];
         $sucessAddData = $dish->save();
         if ($sucessAddData) {
             return response()->json([
@@ -76,6 +77,7 @@ class DishController extends Controller
         $dish = Dish::find($id);
         $dish->name=$request['name'];
         $dish->vendor_id=$request['vendor_id'];
+        $dish->price=$request['price'];
         $sucessAddData = $dish->save();
         if ($sucessAddData) {
             return response()->json([
