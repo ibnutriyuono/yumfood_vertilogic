@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class VendorResource extends JsonResource
+class DishResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,7 @@ class VendorResource extends JsonResource
         return [
             'id'   => $this->id,
             'name' => $this->name,
-            'logo' => $this->logo,
-            'tags' => TagResource::collection($this->tags),
-            'dishes' => DishResource::collection($this->dishes)
+            'vendor' => $this->vendor,
         ];
     }
 }
