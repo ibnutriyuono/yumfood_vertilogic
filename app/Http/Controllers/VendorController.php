@@ -6,7 +6,7 @@ use App\Http\Resources\VendorResource;
 use App\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use \Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class VendorController extends Controller
 {
@@ -70,5 +70,18 @@ class VendorController extends Controller
     public function destroy($id)
     {
         //
+        $vendor = Vendor::find($id);
+        if ($vendor) {
+            Vendor::destroy($id);
+            return response()->json([
+                "statusCode" => 200,
+                "messsage" => "Success. $vendor[name] successfully deleted."
+            ]);
+        } else {
+            return response()->json([
+                "statusCode" => 404,
+                "message" => "Sorry. Data not found"
+            ], 404);
+        }
     }
 }
