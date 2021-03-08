@@ -84,23 +84,30 @@ class VendorController extends Controller
         //
         $validated = $request->validated();
         $vendor = Vendor::find($id);
-        $vendor->name=$request['name'];
-        $vendor->logo=$request['logo'];
-        $successEditData = $vendor->save();
-        if ($successEditData) {
-            $tags = $request['tags'];
-            if (!empty($tags)) {
-                $tagList = explode(",", $tags);
-                foreach ($tagList as $tags) {
-                    $tag = Tag::firstOrCreate(['name' => $tags]);
+        if ($vendor) {
+            $vendor->name=$request['name'];
+            $vendor->logo=$request['logo'];
+            $successEditData = $vendor->save();
+            if ($successEditData) {
+                $tags = $request['tags'];
+                if (!empty($tags)) {
+                    $tagList = explode(",", $tags);
+                    foreach ($tagList as $tags) {
+                        $tag = Tag::firstOrCreate(['name' => $tags]);
+                    }
+                    $tags = Tag::whereIn('name', $tagList)->get()->pluck('id');
+                    $vendor->tags()->sync($tags);
                 }
-                $tags = Tag::whereIn('name', $tagList)->get()->pluck('id');
-                $vendor->tags()->sync($tags);
+                return response()->json([
+                    "statusCode" => 200,
+                    "message" => "Success. $vendor[name] successfully changed."
+                ]);
             }
+        } else {
             return response()->json([
-                "statusCode" => 200,
-                "message" => "Success. $vendor[name] successfully changed."
-            ]);
+                "statusCode" => 404,
+                "message" => "Sorry. Data not found"
+            ], 404);
         }
     }
 
