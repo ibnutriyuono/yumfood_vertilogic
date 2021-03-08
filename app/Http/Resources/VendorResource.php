@@ -18,8 +18,7 @@ class VendorResource extends JsonResource
             'id'   => $this->id,
             'name' => $this->name,
             'logo' => $this->logo,
-            'tags' => TagResource::collection($this->tags),
-            'dishes' => DishResource::collection($this->dishes)
+            'tags' => TagResource::collection($this->tags)
         ];
     }
 }
