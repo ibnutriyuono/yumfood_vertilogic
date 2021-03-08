@@ -74,26 +74,26 @@ class DishController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DishRequest $request, $id)
     {
         //
+        $validated = $request->validated();
+        $dish = Dish::find($id);
+        $dish->name=$request['name'];
+        $dish->vendor_id=$request['vendor_id'];
+        $sucessAddData = $dish->save();
+        if ($sucessAddData) {
+            return response()->json([
+                "statusCode" => 200,
+                "message" => "Success. $dish[name] successfully changed."
+            ]);
+        }
     }
 
     /**
