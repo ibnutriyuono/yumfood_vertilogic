@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Validator;
 use App\Tag;
 use App\Http\Requests\VendorRequest;
+use App\Http\Resources\DishResource;
+use App\Dish;
 
 class VendorController extends Controller
 {
@@ -134,6 +136,19 @@ class VendorController extends Controller
                 "statusCode" => 200,
                 "messsage" => "Success. $vendor[name] successfully deleted."
             ]);
+        } else {
+            return response()->json([
+                "statusCode" => 404,
+                "message" => "Sorry. Data not found"
+            ], 404);
+        }
+    }
+
+    public function getDishByVendor ($id) 
+    {
+        $vendor = Vendor::find($id);
+        if ($vendor) {
+            return response()->json(Dish::where('vendor_id', $id)->get());
         } else {
             return response()->json([
                 "statusCode" => 404,
