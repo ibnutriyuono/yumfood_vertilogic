@@ -20,7 +20,7 @@ class VendorController extends Controller
      */
     public function index()
     {
-        return VendorResource::collection(Vendor::paginate());
+        return VendorResource::collection(Vendor::orderBy('id', 'asc')->paginate());
     }
 
     /**
