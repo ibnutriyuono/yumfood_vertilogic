@@ -18,7 +18,7 @@
 
 ## Total waktu pengerjaan Dish (CRUD Dish + Migration & Route) 1 Jam 20 Menit
 
-### Vendor Controller (CRUD Vendor)
+### Dish Controller (CRUD Dish)
 
 -   **Get Dishes:** `5 Menit`
 -   **Create Dish:** `1 Jam 5 Menit`
@@ -28,7 +28,7 @@
 
 ## Total waktu pengerjaan Order (CRUD Order + Migration & Route) 45 Menit
 
-### Vendor Controller (CRUD Vendor)
+### Order Controller (CRUD Order)
 
 -   **Get Order:** `5 Menit`
 -   **Create Order:** `25 Menit`
