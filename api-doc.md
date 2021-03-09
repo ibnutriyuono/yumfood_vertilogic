@@ -455,3 +455,231 @@
 -   **Sample Call:**
 
     `<base url>/api/v1/dishes/<dish id>`
+
+### Get Orders
+
+-   **URL**
+    `/orders`
+
+-   **Method**
+    `GET`
+
+-   **Success Response**
+    -   **Status Code**
+        `200`
+    -   **Content**
+        ```json
+          {
+            "data": [
+              {
+                "id": "<Order's Id>",
+                "quantity": "<Order's quantity>",
+                "amount" : "<Order's amount>",
+                "vendor": {
+                    "id": "<Vendor's Id>",
+                    "name": "<Vendor's name>",
+                    "logo": "<Vendor's logo>",
+                    "created_at": "<Vendor's timestamp>",
+                    "updated_at": "<Vendor's timestamp>"
+                },
+                "dish": {
+                    "id": "<Dish's Id>",
+                    "name": "<Dish's name>",
+                    "price": "<Dush's price>",
+                    "created_at": "<Dish's timestamp>",
+                    "updated_at": "<Dish's timestamp>"
+                },
+                "user": {
+                    "id": "<User's Id>",
+                    "name": "<User's name>",
+                    "email": "<User's email>",
+                    "email_verified_at": "<User's verified timestamp>"
+                    "created_at": "<User's timestamp>",
+                    "updated_at": "<User's timestamp>"
+                }
+              },
+              ...
+            ]
+          }
+        ```
+-   **Sample Call:**
+
+    `<base url>/api/v1/orders`
+
+### Get Order By Order Id
+
+-   **URL**
+    `/orders/<order id>`
+
+-   **Method**
+    `GET`
+
+-   **Success Response**
+    -   **Status Code**
+        `200`
+    -   **Content**
+        ```json
+        {
+            "data": {
+                "id": "<Order's Id>",
+                "quantity": "<Order's quantity>",
+                "amount" : "<Order's amount>",
+                "vendor": {
+                    "id": "<Vendor's Id>",
+                    "name": "<Vendor's name>",
+                    "logo": "<Vendor's logo>",
+                    "created_at": "<Vendor's timestamp>",
+                    "updated_at": "<Vendor's timestamp>"
+                },
+                "dish": {
+                    "id": "<Dish's Id>",
+                    "name": "<Dish's name>",
+                    "price": "<Dush's price>",
+                    "created_at": "<Dish's timestamp>",
+                    "updated_at": "<Dish's timestamp>"
+                },
+                "user": {
+                    "id": "<User's Id>",
+                    "name": "<User's name>",
+                    "email": "<User's email>",
+                    "email_verified_at": "<User's verified timestamp>"
+                    "created_at": "<User's timestamp>",
+                    "updated_at": "<User's timestamp>"
+                }
+            }
+        }
+        ```
+-   **Error Response:**
+    -   404 Data Not Found
+        ```json
+        {
+            "statusCode": 404,
+            "message": "Sorry. Data not found"
+        }
+        ```
+-   **Sample Call:**
+
+    `<base url>/api/v1/orders/<order id>`
+
+### Create an Order
+
+-   **URL**
+    `/orders`
+
+-   **Method**
+    `POST`
+
+-   **Data Params**
+
+    ```json
+    {
+        "vendor_id": "<Vendor's id>",
+        "dish_id": "<Dish's id>",
+        "user_id": "<User's price>",
+        "quantity": "<Order's quantity>"
+    }
+    ```
+
+-   **Success Response**
+    -   **Status Code**
+        `200`
+    -   **Content**
+        ```json
+        {
+            "statusCode": 200,
+            "message": "Success. <Order's number> successfully added."
+        }
+        ```
+-   **Error Response:**
+    -   422 Unprocessable Entity
+        ```json
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "<field's name>": ["<field's name> is required"]
+            }
+        }
+        ```
+-   **Sample Call:**
+
+    `<base url>/api/v1/orders`
+
+### Edit an Order by Order Id
+
+-   **URL**
+    `/orders/<order id>`
+
+-   **Method**
+    `PUT`
+
+-   **Data Params**
+
+    ```json
+    {
+        "vendor_id": "<Vendor's id>",
+        "dish_id": "<Dish's id>",
+        "user_id": "<User's price>",
+        "quantity": "<Order's quantity>"
+    }
+    ```
+
+-   **Success Response**
+    -   **Status Code**
+        `200`
+    -   **Content**
+        ```json
+        {
+            "statusCode": 200,
+            "message": "Success. <order number> successfully changed."
+        }
+        ```
+-   **Error Response:**
+    -   422 Unprocessable Entity
+        ```json
+        {
+            "message": "The given data was invalid.",
+            "errors": {
+                "<field's name>": ["<field's name> is required"]
+            }
+        }
+        ```
+    -   404 Data not found
+        ```json
+        {
+            "statusCode": 404,
+            "message": "Sorry. Data not found"
+        }
+        ```
+-   **Sample Call:**
+
+    `<base url>/api/v1/orders/<order id>`
+
+### Delete an Order by Order Id
+
+-   **URL**
+    `/orders/<order id>`
+
+-   **Method**
+    `DELETE`
+
+-   **Success Response**
+    -   **Status Code**
+        `200`
+    -   **Content**
+        ```json
+        {
+            "statusCode": 200,
+            "message": "Success. <order number> successfully deleted."
+        }
+        ```
+-   **Error Response:**
+    -   404 Data not found
+        ```json
+        {
+            "statusCode": 404,
+            "message": "Sorry. Data not found"
+        }
+        ```
+-   **Sample Call:**
+
+    `<base url>/api/v1/orders/<order id>`
